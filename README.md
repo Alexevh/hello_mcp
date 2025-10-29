@@ -27,6 +27,7 @@ uv pip install fastmcp anyio mcp
 
 ## Variables de entorno (opcionales)
 - `MCP_URL` (tiene prioridad si está definido). Ejemplo: `https://evolutionary-fuchsia-shark.fastmcp.app/mcp`
+- `MCP_API_KEY` (si está definido, el cliente envía `Authorization: Bearer <MCP_API_KEY>`) 
 - `MCP_HOST` (default `127.0.0.1`)
 - `MCP_PORT` (default `8765`)
 - `MCP_HTTP_PATH` (default `/mcp`)
@@ -45,6 +46,7 @@ Con `.env` (recomendado para despliegue FastMCP): crea un archivo `.env` con:
 
 ```
 MCP_URL=https://evolutionary-fuchsia-shark.fastmcp.app/mcp
+MCP_API_KEY=tu_api_key
 ```
 
 ```

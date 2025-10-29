@@ -4,6 +4,7 @@ import argparse
 import anyio
 from dotenv import load_dotenv
 from fastmcp import Client
+from fastmcp.client.auth import BearerAuth
 
 
 def build_url() -> str:
@@ -21,7 +22,9 @@ def build_url() -> str:
 
 async def run(name: str):
     url = build_url()
-    async with Client(url) as client:
+    api_key = os.getenv("MCP_API_KEY")
+    auth = BearerAuth(api_key) if api_key else None
+    async with Client(url, auth=auth) as client:
         try:
             result = await client.call_tool("say_hello", {"name": name})
         except Exception as e:
@@ -43,6 +46,12 @@ async def run(name: str):
 def main(argv=None):
     # Load .env variables if present
     load_dotenv()
+    # Ensure UTF-8 output on Windows consoles
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
     parser = argparse.ArgumentParser(description="Cliente MCP para say_hello")
     parser.add_argument("--name", "-n", required=True, help="Nombre a saludar")
     args = parser.parse_args(argv)
