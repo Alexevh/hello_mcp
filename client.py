@@ -2,10 +2,15 @@ import os
 import sys
 import argparse
 import anyio
+from dotenv import load_dotenv
 from fastmcp import Client
 
 
 def build_url() -> str:
+    # Prefer explicit MCP_URL if provided (e.g., FastMCP deployment)
+    mcp_url = os.getenv("MCP_URL")
+    if mcp_url:
+        return mcp_url
     host = os.getenv("MCP_HOST", "127.0.0.1")
     port = int(os.getenv("MCP_PORT", "8765"))
     path = os.getenv("MCP_HTTP_PATH", "/mcp")
@@ -36,6 +41,8 @@ async def run(name: str):
 
 
 def main(argv=None):
+    # Load .env variables if present
+    load_dotenv()
     parser = argparse.ArgumentParser(description="Cliente MCP para say_hello")
     parser.add_argument("--name", "-n", required=True, help="Nombre a saludar")
     args = parser.parse_args(argv)
