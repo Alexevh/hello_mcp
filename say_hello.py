@@ -25,6 +25,15 @@ async def say_hello(name: Annotated[str, "Nombre de la persona a saludar"]) -> s
         raise ValueError("El nombre excede 256 caracteres")
     return f"Hola, {nombre}"
 
+@mcp.tool
+async def count_r(texto: Annotated[str, "Texto en el que contar letras 'r' y 'R'"]) -> int:
+    texto_norm = (texto or "").strip()
+    if not texto_norm:
+        raise ValueError("El texto es requerido")
+    if len(texto_norm) > 10000:
+        raise ValueError("El texto excede 10000 caracteres")
+    return sum(1 for ch in texto_norm if ch == 'r' or ch == 'R')
+
 if __name__ == "__main__":
     # Ejecuta servidor HTTP (TCP) en host/puerto configurables
     mcp.run(transport="http", host=HOST, port=DEFAULT_PORT, path=PATH)
