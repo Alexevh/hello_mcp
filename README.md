@@ -6,6 +6,7 @@ Servidor MCP sobre HTTP (TCP) que expone la herramienta `say_hello(name)` y clie
 - Idioma por defecto: español
 - Punto de entrada servidor: `say_hello.py`
 - Cliente: `client.py`
+ - Herramientas disponibles en el mismo servidor: `say_hello` y `count_r`
 
 ## Requisitos
 - Python 3.12+
@@ -57,6 +58,18 @@ Salida esperada:
 
 ```
 Hola, Lucía
+```
+
+También puedes usar la tool `count_r` (cuenta 'r' y 'R'):
+
+```
+python client.py --count-r "Río arriba"
+```
+
+Salida esperada (ejemplo):
+
+```
+2
 ```
 
 ## Errores comunes
